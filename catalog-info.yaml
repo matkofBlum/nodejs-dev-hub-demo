@@ -1,8 +1,0 @@
-apiVersion: backstage.io/v1alpha1
-kind: Location
-metadata:
-  name: simple-nodejs-template
-spec:
-  type: url
-  targets:
-    - https://github.com/matkofBlum/nodejs-dev-hub-demo.git#main

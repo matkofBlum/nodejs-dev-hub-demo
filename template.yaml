@@ -4,8 +4,11 @@ metadata:
   name: simple-nodejs-app
   title: Simple Node.js App
   description: Create a basic Node.js application
+  tags:
+    - nodejs
+    - javascript
 spec:
-  owner: development/guest
+  owner: user:guest
   type: service
 
   parameters:
@@ -17,6 +20,20 @@ spec:
           title: Application Name
           type: string
           description: Name of the application
+          ui:field: EntityNamePicker
+
+    - title: Choose Repository Location
+      required:
+        - repoUrl
+      properties:
+        repoUrl:
+          title: Repository Location
+          type: string
+          ui:field: RepoUrlPicker
+          ui:options:
+            allowedHosts:
+              - github.com
+              - gitlab.com
 
   steps:
     - id: fetch-template
@@ -27,7 +44,27 @@ spec:
         values:
           name: ${{ parameters.name }}
 
+    - id: publish
+      name: Publish to Git
+      action: publish:github # Change to publish:gitlab or publish:gitea if needed
+      input:
+        allowedHosts:
+          - github.com
+        description: Node.js application created via Red Hat Developer Hub
+        repoUrl: ${{ parameters.repoUrl }}
+        defaultBranch: main
+
+    - id: register
+      name: Register Component in Catalog
+      action: catalog:register
+      input:
+        repoContentsUrl: ${{ steps['publish'].output.repoContentsUrl }}
+        catalogInfoPath: '/catalog-info.yaml'
+
   output:
     links:
-      - title: Generated Component
-        url: ./catalog-info.yaml
+      - title: Source Repository
+        url: ${{ steps['publish'].output.remoteUrl }}
+      - title: Open in Catalog
+        icon: catalog
+        entityRef: ${{ steps['register'].output.entityRef }}

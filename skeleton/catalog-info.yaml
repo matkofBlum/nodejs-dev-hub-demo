@@ -1,9 +1,9 @@
 apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
-  name: {{ values.name }}
+  name: ${{ values.name | dump }}
   description: Generated Node.js application
 spec:
   type: service
   lifecycle: experimental
-  owner: development/guest
+  owner: user:guest
