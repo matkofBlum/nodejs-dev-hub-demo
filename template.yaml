@@ -1,0 +1,33 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: simple-nodejs-app
+  title: Simple Node.js App
+  description: Create a basic Node.js application
+spec:
+  owner: development/guest
+  type: service
+
+  parameters:
+    - title: Application Information
+      required:
+        - name
+      properties:
+        name:
+          title: Application Name
+          type: string
+          description: Name of the application
+
+  steps:
+    - id: fetch-template
+      name: Generate files
+      action: fetch:template
+      input:
+        url: ./skeleton
+        values:
+          name: ${{ parameters.name }}
+
+  output:
+    links:
+      - title: Generated Component
+        url: ./catalog-info.yaml
