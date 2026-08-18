@@ -3,6 +3,5 @@ kind: Location
 metadata:
   name: simple-nodejs-template
 spec:
-  targets:
-    target: https://github.com/matkofBlum/nodejs-dev-hub-demo.git
-    type: url
+  target: https://github.com/matkofBlum/nodejs-dev-hub-demo.git#main
+  type: url
