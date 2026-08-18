@@ -1,9 +1,9 @@
 {
-    "name": "{{ values.name }}",
-    "version": "1.0.0",
-    "description": "Generated Node.js application",
-    "main": "index.js",
-    "scripts": {
-      "start": "node index.js"
-    }
+  "name": "{{ values.name }}",
+  "version": "1.0.0",
+  "description": "Generated Node.js application",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
   }
+}
