@@ -1,0 +1,109 @@
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: nodejs-demo-api
+  title: Demo Node.js Tasks API
+  description: Simple REST API for task management in the demo Node.js service
+  tags:
+    - rest
+    - openapi
+    - nodejs
+spec:
+  type: openapi
+  lifecycle: experimental
+  owner: user:development/guest
+  definition: |
+    openapi: 3.0.3
+    info:
+      title: Node.js Tasks API
+      version: 1.0.0
+      description: API specification for managing simple tasks.
+    paths:
+      /health:
+        get:
+          summary: Service Health Check
+          description: Returns current status of the Node.js application
+          responses:
+            '200':
+              description: Application is running healthy
+              content:
+                application/json:
+                  schema:
+                    type: object
+                    properties:
+                      status:
+                        type: string
+                        example: "ok"
+                      uptime:
+                        type: number
+                        example: 124.5
+
+      /tasks:
+        get:
+          summary: List all tasks
+          responses:
+            '200':
+              description: A list of tasks
+              content:
+                application/json:
+                  schema:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Task'
+        post:
+          summary: Create a new task
+          requestBody:
+            required: true
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/NewTask'
+          responses:
+            '201':
+              description: Task created successfully
+              content:
+                application/json:
+                  schema:
+                    $ref: '#/components/schemas/Task'
+
+      /tasks/{id}:
+        get:
+          summary: Get task by ID
+          parameters:
+            - name: id
+              in: path
+              required: true
+              schema:
+                type: string
+          responses:
+            '200':
+              description: Task details
+              content:
+                application/json:
+                  schema:
+                    $ref: '#/components/schemas/Task'
+            '404':
+              description: Task not found
+
+    components:
+      schemas:
+        Task:
+          type: object
+          properties:
+            id:
+              type: string
+              example: "task-101"
+            title:
+              type: string
+              example: "Deploy to OpenShift"
+            completed:
+              type: boolean
+              example: false
+        NewTask:
+          type: object
+          required:
+            - title
+          properties:
+            title:
+              type: string
+              example: "Deploy to OpenShift"
