@@ -4,5 +4,5 @@ metadata:
   name: simple-nodejs-template
 spec:
   targets:
-    target: ./template.yaml
+    target: https://github.com/matkofBlum/nodejs-dev-hub-demo.git
     type: url
