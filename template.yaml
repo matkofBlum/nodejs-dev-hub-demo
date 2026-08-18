@@ -8,7 +8,7 @@ metadata:
     - nodejs
     - javascript
 spec:
-  owner: user:guest
+  owner: user:development/guest
   type: service
 
   parameters:
